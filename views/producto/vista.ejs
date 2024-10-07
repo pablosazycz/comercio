@@ -5,7 +5,7 @@
       <p>No hay categorías disponibles.</p>
     <% } else { %>
       <% categorias.forEach(categoria => { %>
-        <h2><%= categoria.nombre %></h2> <!-- Título de la categoría -->
+        <h2><%= categoria.nombre %></h2> 
     
         <ul>
           <% const productosPorCategoria = productos.filter(producto => producto.categoria.toString() === categoria._id.toString()); %>
