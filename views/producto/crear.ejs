@@ -1,15 +1,13 @@
-
+<title>Agregar Nuevo Producto</title>
 
 <h2>Agregar Nuevo Producto</h2>
 <form action="/producto/crear" method="POST">
-  <!-- Asegúrate de que la ruta sea correcta -->
   <input type="text" name="nombre" placeholder="Nombre del Producto" required />
   <input type="number" name="precio" placeholder="Precio" required />
   <input type="text" name="descripcion" placeholder="Descripción" />
 
   <select name="categoria" required>
     <option value="">Selecciona una categoría</option>
-    <!-- Aquí debes llenar las opciones dinámicamente desde tu base de datos -->
     <% if (categorias && categorias.length > 0) { %> <%
     categorias.forEach(categoria => { %>
     <option value="<%= categoria._id %>"><%= categoria.nombre %></option>

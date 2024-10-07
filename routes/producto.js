@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const productoController = require('../controllers/productoController');
+const {isAdmin} = require('../middlewares/auth');
 
-router.get('/crear', productoController.createProductoView);
+router.get('/crear',isAdmin, productoController.createProductoView);
 
-router.post('/crear', productoController.createProducto);
+router.post('/crear',isAdmin, productoController.createProducto);
 
 router.get("/vista", productoController.getAllProductos);
 
