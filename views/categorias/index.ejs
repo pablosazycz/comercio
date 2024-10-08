@@ -2,12 +2,30 @@
     <div class="container">
         <h1>Listado de Categorías</h1>
         <% if (categorias.length > 0) { %>
-            <ul>
-                <% categorias.forEach(function(categoria) { %>
-                    <li><%= categoria.nombre %></li>
-                    <p><em><%= categoria.descripcion %></em></p>
-                <% }); %>
-            </ul>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% categorias.forEach(function(categoria) { %>
+                        <tr>
+                            <td><%= categoria.nombre %></td>
+                            <td><%= categoria.descripcion %></td>
+                            <td>
+                                <a href="/categorias/<%= categoria.id %>" class="btn btn-info">Detalles</a>
+                                <a href="/categorias/editar/<%= categoria.id %>" class="btn btn-warning">Editar</a>
+                                <form action="/categorias/eliminar/<%= categoria.id %>" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
         <% } else { %>
             <p>No hay categorías disponibles.</p>
         <% } %>

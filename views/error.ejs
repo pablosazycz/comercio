@@ -1,8 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+</head>
 <body>
-    <div class="error-container">
-        <h1>Error</h1>
-        <p>Lo sentimos, ha ocurrido un error.</p>
-        <p><%= error.message %></p>
-        <a href="/">Volver a la página principal</a>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-header bg-danger text-white">
+                        <h1>Error</h1>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Lo sentimos, ha ocurrido un error.</p>
+                        <p class="card-text"><%= error.message %></p>
+                        <a href="/" class="btn btn-primary">Volver a la página principal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+</html>

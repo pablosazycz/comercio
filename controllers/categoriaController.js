@@ -4,7 +4,6 @@ const Producto = require("../models/Producto");
 exports.getAllCategories = async (req, res) => {
   try{
     const categorias = await Categoria.find();
-    console.log(categorias);
     res.render("categorias/index", {categorias});
     }
   catch(error){
@@ -30,5 +29,14 @@ exports.createCategoriesViews = async (req, res) => {
     res.render("categorias/crear");
   }catch(error){
     res.status(500).json({error: error.message});
+  }
+};
+
+exports.deleteCategory = async (req, res) => {
+  try {
+    await Categoria.findByIdAndDelete(req.params.id);
+    res.redirect("/categorias");
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

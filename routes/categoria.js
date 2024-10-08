@@ -10,4 +10,7 @@ router.get('/crear',isAdmin, categoriaController.createCategoriesViews);
 
 router.post('/crear',isAdmin, categoriaController.createCategories);
 
+router.post('/eliminar/:id', isAdmin, categoriaController.deleteCategory);
+
 module.exports = router;
+
