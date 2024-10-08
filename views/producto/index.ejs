@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Productos</title>
+    
+  </head>
+  <body>
+    <a href="/producto/crear" class="btn btn-primary">Agregar Nuevo Producto</a>
+    <a href="/categorias" class="btn btn-primary">Ver Categorías</a>
+    <div class="container mt-5">
+      <% if (categorias.length > 0) { %> <% categorias.forEach(categoria => { %>
+      <h2 class="mt-4"><%= categoria.nombre %></h2>
+      <table class="table table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% const productosPorCategoria = productos.filter(producto =>
+          producto.categoria.toString() === categoria._id.toString()); %> <% if
+          (productosPorCategoria.length === 0) { %>
+          <tr>
+            <td colspan="6">No hay productos en esta categoría.</td>
+          </tr>
+          <% } else { %> <% productosPorCategoria.forEach(producto => { %>
+          <tr>
+            <td><%= producto.nombre %></td>
+            <td>$<%= producto.precio %></td>
+            <td><%= producto.descripcion ? producto.descripcion : 'N/A' %></td>
+            <td class="text-center d-grid">
+              <a
+                href="/producto/editar/<%= producto._id %>"
+                class="btn btn-warning btn-sm "
+                >Editar</a
+              >
+            </td>
+            <td class="text-center full fill width-100 width">
+              <form
+                action="/producto/eliminar/<%= producto._id %>"
+                method="POST"
+              >
+                <button
+                  class="btn btn-danger btn-sm"
+                  onclick="return confirm('¿Estás seguro de eliminar este producto?');"
+                >
+                  Eliminar
+                </button>
+              </form>
+            </td>
+            <td class="text-center d-grid">
+              <a
+                href="/producto/<%= producto._id %>"
+                class="btn btn-sm btn-info"
+                >Detalles</a
+              >
+            </td>
+          </tr>
+          <% }); %> <% } %>
+        </tbody>
+      </table>
+      <% }); %> <% } %>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<body>
+    <div class="container">
+        <h1>Listado de Categorías</h1>
+        <% if (categorias.length > 0) { %>
+            <ul>
+                <% categorias.forEach(function(categoria) { %>
+                    <li><%= categoria.nombre %></li>
+                    <p><em><%= categoria.descripcion %></em></p>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No hay categorías disponibles.</p>
+        <% } %>
+    </div>
+
+    <div>
+        <a href="/categorias/crear" class="btn btn-primary">Agregar Categoría</a>
+    </div>
+</body>

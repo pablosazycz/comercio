@@ -18,9 +18,12 @@ exports.createProducto = async (req, res) => {
     categoria: req.body.categoria,
   });
 
+  const productos = await Producto.find();
+  const categorias = await Categoria.find();
+
   try {
     await nuevoProducto.save();
-    res.render("/producto/vista");
+    res.redirect("/producto");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -56,7 +59,7 @@ exports.getAllProductos = async (req, res) => {
     const productos = await Producto.find();
     const categorias = await Categoria.find();
 
-    res.render("producto/vista", { productos, categorias });
+    res.render("producto/", { productos, categorias });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -74,31 +77,62 @@ exports.getProductoById = async (req, res) => {
   }
 };
 
+exports.updateProductoView = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const producto = await Producto.findById(id);
+    if (!producto) {
+      return res.status(404).render("producto/", {
+        error: "El producto no existe",
+        productos: await Producto.find(),
+      });
+    }
+    const categorias = await Categoria.find();
+    res.render("producto/editar", { producto, categorias });
+  }
+  catch (error) {
+    res.status(500).render("producto/", {
+      error: "Error al editar el producto",
+      productos: await Producto.find(),
+    });
+  }
+}
+
 exports.updateProducto = async (req, res) => {
   const { id } = req.params;
   try {
-    const prodActualizado = await Producto.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    if (!productoActualizado) {
-      return res.status(404).json({ error: "El producto no existe" });
+    const producto = await Producto.findByIdAndUpdate(id, req.body, { new: true });
+    if (!producto) {
+      return res.status(404).render("producto/", {
+        error: "El producto no existe",
+        productos: await Producto.find(),
+      });
     }
-    res.status(200).json(productoActualizado);
+    res.redirect("/producto/");
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).render("producto/", {
+      error: "Error al editar el producto",
+      productos: await Producto.find(),
+    });
   }
 };
 
 exports.deleteProducto = async (req, res) => {
   const { id } = req.params;
   try {
-    const productoEliminado = await Producto.findByIdAndDelete(id);
-    if (!productoEliminado) {
-      return res.status(404).json({ error: "El producto no existe" });
+    const producto = await Producto.findByIdAndDelete(id);
+    if (!producto) {
+      return res.status(404).render("producto/", {
+        error: "El producto no existe",
+        productos: await Producto.find(),
+      });
     }
-    res.status(204).send();
+    res.redirect("/producto/");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).render("producto/", {
+      error: "Error al eliminar el producto",
+      productos: await Producto.find(),
+    });
   }
 };
 
@@ -110,6 +144,17 @@ exports.getProductsByCategory = async (req, res) => {
     );
     res.status(200).json(productos);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getProductoById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const producto = await Producto.findById(id).populate("categoria");
+    res.render("producto/detalle", { producto });
+  }
+  catch (error) {
     res.status(500).json({ error: error.message });
   }
 };

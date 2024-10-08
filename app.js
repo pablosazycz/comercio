@@ -16,6 +16,7 @@ const usersRouter = require("./routes/users");
 const productoRouter = require("./routes/producto");
 const contactoRouter = require("./routes/contacto");
 const usuarioRouter = require("./routes/usuario");
+const categoriaRouter = require("./routes/categoria");
 
 const app = express();
 // Conexión a la base de datos
@@ -56,6 +57,8 @@ app.use("/", indexRouter);
 app.use("/producto", productoRouter);
 app.use("/contacto", contactoRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/categorias", categoriaRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
