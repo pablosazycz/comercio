@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+</head>
+<body>
+    <h1>Carrito de Compras</h1>
+
+    <% if (carro && carro.productos.length > 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% carro.productos.forEach(producto => { %>
+                    <tr>
+                        <td><%= producto.producto.nombre %></td>
+                        <td>$<%= producto.producto.precio %></td>
+                        <td>
+                            <!-- Formulario para actualizar la cantidad -->
+                            <form action="/carro/editarCantidad" method="POST">
+                                <input type="hidden" name="productoId" value="<%= producto.producto._id %>">
+                                <input type="number" name="nuevaCantidad" value="<%= producto.cantidad %>" min="1">
+                                <button type="submit">Actualizar cantidad</button>
+                            </form>
+                        </td>
+                        <td>$<%= (producto.producto.precio * producto.cantidad).toFixed(2) %></td>
+                        <td>
+                            <!-- Botón para eliminar el producto del carrito -->
+                            <form action="/carro/eliminar/<%= producto.producto._id %>" method="POST">
+                                <input type="hidden" name="productoId" value="<%= producto.producto._id %>">
+                                <button type="submit">Eliminar del carrito</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <div class="cart-total">
+            <h3>Total: $<%= carro.productos.reduce((total, producto) => total + (producto.producto.precio * producto.cantidad), 0).toFixed(2) %></h3>
+        </div>
+
+        <!-- Botón para vaciar el carrito -->
+        <form action="/carro/vaciar" method="POST">
+            <button type="submit">Vaciar Carrito</button>
+        </form>
+
+        <!-- Botón para proceder al pago -->
+        <form action="/carro/checkout" method="POST">
+            <button type="submit">CheckOut</button>
+        </form>
+
+    <% } else { %>
+        <p>Tu carrito está vacío.</p>
+    <% } %>
+
+</body>
+</html>

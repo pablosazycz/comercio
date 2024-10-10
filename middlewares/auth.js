@@ -3,7 +3,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login');
+  res.redirect('/usuarios/login');
 }
 
 function isAdmin(req, res, next) {
@@ -13,4 +13,11 @@ function isAdmin(req, res, next) {
   res.status(403).send('Acceso denegado');
 }
 
-module.exports = { ensureAuthenticated, isAdmin };
+function isCliente(req, res, next) {
+  if (req.isAuthenticated() && req.user.rol === 'Cliente') {
+    return next();
+  }
+  res.status(403).send('Acceso denegado. Solo los clientes pueden realizar esta acción.');
+}
+
+module.exports = { ensureAuthenticated, isAdmin,isCliente };

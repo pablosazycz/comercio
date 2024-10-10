@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 exports.mostrarRegistro = (req, res) => {
-	res.render("usuarios/registro");
+	res.render("usuarios/registro" , { layout: 'layout-login' });
 };
 
 exports.registerUsuario = async (req, res) => {
@@ -12,6 +12,7 @@ exports.registerUsuario = async (req, res) => {
 	if (password !== confirmPassword) {
 		return res.render("usuarios/registro", {
 			error: "Las contraseñas no coinciden",
+			layout: 'layout-login'
 		});
 	}
 
@@ -19,6 +20,7 @@ exports.registerUsuario = async (req, res) => {
 	if (existeUser) {
 		return res.render("usuarios/registro", {
 			error: "El email ya está registrado",
+			layout: 'layout-login'
 		});
 	}
 
@@ -35,12 +37,13 @@ exports.registerUsuario = async (req, res) => {
 	} catch (error) {
 		res.render("usuarios/registro", {
 			error: "Hubo un error al registrar el usuario",
+			layout:'layout-login'
 		});
 	}
 };
 
 exports.mostrarLogin = (req, res) => {
-	res.render("usuarios/login");
+	res.render("usuarios/login", { layout: 'layout-login' });
 };
 
 exports.iniciarSesion = (req, res, next) => {
@@ -50,7 +53,8 @@ exports.iniciarSesion = (req, res, next) => {
 		}
 		if (!user) {
 			return res.render("usuarios/login", {
-				error: "Usuario o contraseña incorrectos"
+				error: "Usuario o contraseña incorrectos",
+				layout: 'layout-login'
 			});
 		}
 		req.logIn(user, (err) => {

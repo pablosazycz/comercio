@@ -26,7 +26,7 @@ const carroSchema = new Schema({
     },
     estado: {
         type: String,
-        enum: ["pendiente", "pagado","cancelado"],
+        enum: ["pendiente", "pagado","cancelado","completo"],
         default: "pendiente",
     },
 });

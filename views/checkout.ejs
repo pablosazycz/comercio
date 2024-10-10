@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Confirmar Pedido</title>
+</head>
+<body>
+    <h1>Confirmar Pedido</h1>
+
+    <!-- Información del usuario -->
+    <div class="usuario-info">
+        <p><strong>Usuario:</strong> <%= usuario.nombre %> <%=usuario.apellido%> (<%= usuario.email %>)</p>
+    </div>
+
+    <!-- Lista de productos en el carrito -->
+    <h2>Productos en el Carrito</h2>
+    <ul>
+        <% carro.productos.forEach(function(item) { %>
+            <li>
+                <strong>Producto:</strong> <%= item.producto.nombre %><br>
+                <strong>Cantidad:</strong> <%= item.cantidad %><br>
+                <strong>Precio unitario:</strong> $<%= item.producto.precio.toFixed(2) %><br>
+                <strong>Subtotal:</strong> $<%= (item.cantidad * item.producto.precio).toFixed(2) %><br>
+            </li>
+            <hr>
+        <% }) %>
+    </ul>
+
+    <!-- Total del pedido -->
+    <h3>Total a Pagar</h3>
+    <p><strong>Total:</strong> $<%= carro.productos.reduce((total, item) => total + (item.cantidad * item.producto.precio), 0).toFixed(2) %></p>
+
+    <!-- Botón para proceder al pago -->
+    <form action="/pedido/procesarPago" method="POST">
+        <input type="hidden" name="carroId" value="<%= carro._id %>">
+        <button type="submit">Pagar</button>
+    </form>
+</body>
+</html>

@@ -1,33 +1,78 @@
 <title>Registro de Usuario</title>
-<body>
-    <h1>Registro de Usuario</h1>
-    
-    <% if (typeof error !== "undefined") { %>
-        <p style="color:red;"><%= error %></p>
-    <% } %>
 
-    <form method="POST" action="/usuarios/registro">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" required>
-        <br>
-
-        <label for="apellido">Apellido:</label>
-        <input type="text" name="apellido" required>
-        <br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" required>
-        <br>
-
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" required>
-        <br>
-
-        <label for="confirmPassword">Confirmar Contraseña:</label>
-        <input type="password" name="confirmPassword" required>
-        <br>
-
-        <button type="submit">Registrarse</button>
-    </form>
+<body class="bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mt-5">
+          <div class="card-header text-center">
+            <h1>Iniciar Sesión</h1>
+          </div>
+          <div class="card-body">
+            <% if (error.length !== 0) { %>
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+            <% } %>
+            <form method="POST" action="/usuarios/registro" class="mt-4">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="nombre"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="apellido"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña:</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label"
+                  >Confirmar Contraseña:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  name="confirmPassword"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Registrarse
+              </button>
+            </form>
+            <div class="text-center mt-3">
+              <p>
+                ¿Ya tenes un usuario?
+                <a href="/usuarios/login">Inicia tu Sesión</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
-</html>

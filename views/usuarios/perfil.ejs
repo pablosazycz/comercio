@@ -1,12 +1,20 @@
 
-<body>
-    <h1>Perfil de Usuario</h1>
-    
-    <p>Nombre: <%= usuario.nombre %></p>
-    <p>Apellido: <%= usuario.apellido %></p>
-    <p>Email: <%= usuario.email %></p>  
-    <p>Rol: <%= usuario.rol %></p>
-
-    <a href="/usuarios/logout">Cerrar Sesión</a>
+    <title>Perfil de Usuario</title>
+   
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="card-title">Perfil de Usuario</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Nombre:</strong> <%= usuario.nombre %></p>
+                <p class="card-text"><strong>Apellido:</strong> <%= usuario.apellido %></p>
+                <p class="card-text"><strong>Email:</strong> <%= usuario.email %></p>
+                <p class="card-text"><strong>Rol:</strong> <%= usuario.rol %></p>
+                <a href="/usuarios/logout" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
