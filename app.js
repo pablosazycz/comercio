@@ -34,7 +34,7 @@ app.set("view engine", "ejs");
 // app.set("view engine", "pug");
 //middlewares
 app.use(session({
-  secret: SECRET_KEY, // Cambia esto a algo seguro
+  secret:process.env.SESSION_SECRET, // Cambia esto a algo seguro
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({

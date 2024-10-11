@@ -6,10 +6,7 @@ const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/comercio';
 // Función para conectar a la base de datos
 const connectDB = async () => {
   try {
-    await mongoose.connect(mongoURI,  {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoURI);
     console.log("Conectado a la base de datos");
   } catch (error) {
     console.error("Error al conectar a la base de datos:", error.message);
