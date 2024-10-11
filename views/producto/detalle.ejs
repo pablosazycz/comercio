@@ -8,16 +8,14 @@
         <p><%= producto.descripcion %></p>
         <p>Precio: $<%= producto.precio %></p>
 
-        <!-- Formulario para agregar producto al carrito -->
         <form action="/carro/agregar" method="POST">
-            <!-- Campo oculto para enviar el ID del producto -->
+           
             <input type="hidden" name="productoId" value="<%= producto._id %>">
 
-            <!-- Campo para seleccionar la cantidad -->
             <label for="cantidad">Cantidad:</label>
             <input type="number" id="cantidad" name="cantidad" value="1" min="1">
 
-            <!-- Botón para enviar el formulario -->
+           
             <button type="submit">Añadir al carrito</button>
         </form>
     </div>
