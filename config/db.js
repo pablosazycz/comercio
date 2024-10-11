@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/comercio';
+
 // Función para conectar a la base de datos
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI,  {
+    await mongoose.connect(mongoURI,  {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
