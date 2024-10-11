@@ -1,3 +1,4 @@
+require('dotenv').config();
 const localStrategy = require("passport-local").Strategy;
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");

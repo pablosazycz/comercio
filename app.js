@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const createError = require("http-errors");
 const path = require("path");
@@ -8,6 +10,7 @@ const connectDB = require("./config/db");
 const expressLayouts = require("express-ejs-layouts");
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 
 const authRouter = require("./routes/auth");
@@ -30,13 +33,16 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 // app.set("view engine", "pug");
 //middlewares
-app.use(
-  session({
-    secret: "secreto",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+app.use(session({
+  secret: SECRET_KEY, // Cambia esto a algo seguro
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    ttl: 14 * 24 * 60 * 60  // Tiempo de vida de 14 días
+  }),
+  cookie: { secure: false }  // Cambia a true si usas HTTPS
+}));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
