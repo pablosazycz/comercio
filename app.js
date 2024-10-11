@@ -75,8 +75,7 @@ app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-console.log("MONGO_URI:", process.env.MONGO_URI);
-console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
