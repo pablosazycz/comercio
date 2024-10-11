@@ -34,11 +34,11 @@ app.set("view engine", "ejs");
 // app.set("view engine", "pug");
 //middlewares
 app.use(session({
-  secret:process.env.SESSION_SECRET, // Cambia esto a algo seguro
+  secret:process.env.SESSION_SECRET || 'tu_secreto_lala',
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/comercio',
     ttl: 14 * 24 * 60 * 60  // Tiempo de vida de 14 días
   }),
   cookie: { secure: false }  // Cambia a true si usas HTTPS
@@ -69,6 +69,14 @@ app.use("/categorias", categoriaRouter);
 app.use('/carro', carroRouter);
 app.use('/pedido', pedidoRouter);
 
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
+
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
