@@ -58,8 +58,9 @@ exports.getAllProductos = async (req, res) => {
   try {
     const productos = await Producto.find();
     const categorias = await Categoria.find();
+    const usuario = req.user;
 
-    res.render("producto/", { productos, categorias });
+    res.render("producto/", { productos, categorias, usuario });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

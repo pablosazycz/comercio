@@ -18,7 +18,7 @@
         <% pedidos.forEach(function(pedido) { %>
         <tr>
           <td><%= pedido._id %></td>
-          <td><%= new Date(pedido.fechaCreacion).toLocaleDateString() %></td>
+          <td><%= new Date(pedido.fechaPedido).toLocaleDateString() %></td>
           <td><%= pedido.estado %></td>
           <td><%= new Date(pedido.fechaEntrega).toLocaleDateString() %></td>
           <td>

@@ -1,3 +1,4 @@
+<title>Listado de Categoías</title>
 <body>
     <div class="container">
         <h1>Listado de Categorías</h1>
@@ -7,7 +8,9 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Descripción</th>
+                        <% if(usuario.rol==='Admin'){ %>
                         <th>Acciones</th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -15,13 +18,14 @@
                         <tr>
                             <td><%= categoria.nombre %></td>
                             <td><%= categoria.descripcion %></td>
+                            <% if(usuario.rol==='Admin'){ %>
                             <td>
-                                <a href="/categorias/<%= categoria.id %>" class="btn btn-info">Detalles</a>
                                 <a href="/categorias/editar/<%= categoria.id %>" class="btn btn-warning">Editar</a>
-                                <form action="/categorias/eliminar/<%= categoria.id %>" method="POST" style="display:inline;">
+                                <form action="/categorias/eliminar/<%= categoria.id %>" method="POST" >
                                     <button type="submit" class="btn btn-danger">Borrar</button>
                                 </form>
                             </td>
+                            <% } %>
                         </tr>
                     <% }); %>
                 </tbody>
@@ -30,8 +34,9 @@
             <p>No hay categorías disponibles.</p>
         <% } %>
     </div>
-
+    <% if(usuario.rol==='Admin'){ %>
     <div>
         <a href="/categorias/crear" class="btn btn-primary">Agregar Categoría</a>
     </div>
+    <% } %>
 </body>

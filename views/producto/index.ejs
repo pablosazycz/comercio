@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Productos</title>
-    
   </head>
   <body>
+    <% if(usuario.rol==='Admin'){ %>
     <a href="/producto/crear" class="btn btn-primary">Agregar Nuevo Producto</a>
     <a href="/categorias" class="btn btn-primary">Ver Categorías</a>
+    <% } %>
     <div class="container mt-5">
       <% if (categorias.length > 0) { %> <% categorias.forEach(categoria => { %>
       <h2 class="mt-4"><%= categoria.nombre %></h2>
@@ -18,8 +19,10 @@
             <th>Nombre</th>
             <th>Precio</th>
             <th>Descripción</th>
+            <% if(usuario.rol==='Admin'){ %>
             <th></th>
             <th></th>
+            <% } %>
             <th></th>
           </tr>
         </thead>
@@ -35,10 +38,11 @@
             <td><%= producto.nombre %></td>
             <td>$<%= producto.precio %></td>
             <td><%= producto.descripcion ? producto.descripcion : 'N/A' %></td>
+            <% if(usuario.rol==='Admin'){ %>
             <td class="text-center d-grid">
               <a
                 href="/producto/editar/<%= producto._id %>"
-                class="btn btn-warning btn-sm "
+                class="btn btn-warning btn-sm"
                 >Editar</a
               >
             </td>
@@ -55,6 +59,7 @@
                 </button>
               </form>
             </td>
+            <% } %>
             <td class="text-center d-grid">
               <a
                 href="/producto/<%= producto._id %>"

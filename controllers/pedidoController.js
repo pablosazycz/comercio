@@ -1,30 +1,7 @@
 const Pedido = require("../models/Pedido");
 const Carro = require("../models/Carro");
 
-exports.verPedido = async (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({
-      error: "Debes iniciar sesión para ver tus pedidos",
-    });
-  }
-  const usuarioId = req.user._id;
-  const { id } = req.params;
-  try {
-    const pedido = await Pedido.findOne({
-      usuario: usuarioId,
-      _id: id,
-    }).populate("productos.producto");
 
-    if (!pedido) {
-      return res.status(404).json({ error: "El pedido no existe" });
-    }
-
-    res.render("pedido", { pedido });
-  } catch (error) {
-    console.error("Error al ver el pedido:", error);
-    res.status(500).json({ error: "Hubo un error al ver el pedido" });
-  }
-};
 
 exports.procesarPago = async (req, res) => {
   if (!req.user) {
@@ -72,7 +49,7 @@ exports.detallesPedido = async (req, res) => {
     const pedido = await Pedido.findOne({
       _id: pedidoId,
       usuario: req.user._id,
-    }).populate("productos.producto");
+    }).populate("productos.producto").populate("usuario");
 
     if (!pedido) {
       return res.status(404).json({ error: "Pedido no encontrado" });
@@ -85,16 +62,19 @@ exports.detallesPedido = async (req, res) => {
 };
 
 exports.verMisPedidos = async (req, res) => {
-  try{
-    if(!req.user){
-      return res.status(401).json({error: "Debes iniciar sesión para ver tus pedidos"});
+  try {
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ error: "Debes iniciar sesión para ver tus pedidos" });
     }
-    const pedidos = await Pedido.find({ usuario: req.user._id }).populate("productos.producto");
+    const pedidos = await Pedido.find({ usuario: req.user._id }).populate(
+      "productos.producto"
+    );
 
-    res.render("pedido/mispedidos", {pedidos: pedidos});
-  }catch(error){
+    res.render("pedido/mispedidos", { pedidos: pedidos });
+  } catch (error) {
     console.error("Error al ver los pedidos:", error);
-    res.status(500).json({error: "Hubo un error al ver los pedidos"});
+    res.status(500).json({ error: "Hubo un error al ver los pedidos" });
   }
 };
-

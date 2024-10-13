@@ -4,7 +4,8 @@ const Producto = require("../models/Producto");
 exports.getAllCategories = async (req, res) => {
   try{
     const categorias = await Categoria.find();
-    res.render("categorias/index", {categorias});
+    const usuario = req.user;
+    res.render("categorias/index", {categorias,usuario});
     }
   catch(error){
     res.status(500).json({error: error.message});
@@ -40,3 +41,22 @@ exports.deleteCategory = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.updateCategoryView = async (req, res) => {
+  try {
+    const categoria = await Categoria.findById(req.params.id);
+    res.render("categorias/editar", { categoria });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+exports.updateCategory = async (req, res) => {
+  try {
+    await Categoria.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect("/categorias");
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

@@ -54,9 +54,9 @@ exports.verCarro = async (req, res) => {
       estado: "pendiente",
     }).populate("productos.producto");
     if (!carro) {
-      return res.render("carro", { carro: { productos: [] } });
+      return res.render("carro/carro", { carro: { productos: [] } });
     }
-    res.render("carro", { carro });
+    res.render("carro/carro", { carro });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -75,7 +75,7 @@ exports.vaciarCarro = async (req, res) => {
       return res.status(404).json({ error: "Carrito no encontrado" });
     }
 
-    res.redirect("/carro");
+    res.redirect("/carro/ver");
   } catch (error) {
     console.error("Error al eliminar el carrito:", error);
     res.status(500).json({ error: "Hubo un error al eliminar el carrito" });
@@ -123,7 +123,7 @@ exports.checkout = async (req, res) => {
       return res.status(404).json({ error: "No se encontró el carrito" });
     }
 
-    res.render("checkout", {
+    res.render("carro/checkout", {
       usuario: req.user,
       carro: carro,
     });
