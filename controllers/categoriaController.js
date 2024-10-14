@@ -5,6 +5,10 @@ exports.getAllCategories = async (req, res) => {
   try{
     const categorias = await Categoria.find();
     const usuario = req.user;
+    if (!req.user) {
+      return res.redirect('/usuarios/login'); 
+    }
+
     res.render("categorias/index", {categorias,usuario});
     }
   catch(error){

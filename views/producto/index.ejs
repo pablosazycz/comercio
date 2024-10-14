@@ -6,7 +6,7 @@
     <title>Lista de Productos</title>
   </head>
   <body>
-    <% if(usuario.rol==='Admin'){ %>
+    <% if(usuario && usuario.rol==='Admin'){ %>
     <a href="/producto/crear" class="btn btn-primary">Agregar Nuevo Producto</a>
     <a href="/categorias" class="btn btn-primary">Ver Categorías</a>
     <% } %>

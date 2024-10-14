@@ -13,6 +13,7 @@ const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 
+// webapp
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -22,6 +23,12 @@ const usuarioRouter = require("./routes/usuario");
 const categoriaRouter = require("./routes/categoria");
 const carroRouter = require("./routes/carro");
 const pedidoRouter = require("./routes/pedido");
+
+// API
+const apiAuthRputer = require("./routes/apiAuth");
+const apiProductoRouter = require("./routes/apiProducto");
+const apiCategoriaRouter = require("./routes/apiCategoria");
+
 
 const app = express();
 // Conexión a la base de datos
@@ -68,6 +75,11 @@ app.use("/usuarios", usuarioRouter);
 app.use("/categorias", categoriaRouter);
 app.use('/carro', carroRouter);
 app.use('/pedido', pedidoRouter);
+
+// API
+app.use("/api", apiAuthRputer);
+app.use("/api", apiProductoRouter);
+app.use("/api", apiCategoriaRouter);
 
 const PORT = process.env.PORT || 3001;
 

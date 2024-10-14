@@ -58,8 +58,10 @@ exports.getAllProductos = async (req, res) => {
   try {
     const productos = await Producto.find();
     const categorias = await Categoria.find();
-    const usuario = req.user;
-
+    const usuario = req.user || null;
+    if (!req.user) {
+      return res.redirect('/usuarios/login'); 
+    }
     res.render("producto/", { productos, categorias, usuario });
   } catch (error) {
     res.status(500).json({ error: error.message });
