@@ -4,7 +4,7 @@ const Usuario = require("../models/Usuario");
 exports.getAllCategories = async (req, res) => {
   if (!req.user) {
     return res.status(401).json({
-      error: "Debes iniciar sesión para agregar productos al carrito",
+      error: "Debes iniciar sesión para acceder a la url",
     });
   }
   try {
@@ -18,7 +18,7 @@ exports.getAllCategories = async (req, res) => {
 exports.createCategories = async (req, res) => {
   if (!req.user) {
     return res.status(401).json({
-      error: "Debes iniciar sesión para agregar productos al carrito",
+      error: "Debes iniciar sesión para acceder a la url",
     });
   }
   if (req.user.rol !== 'Admin') {  
@@ -41,7 +41,7 @@ exports.createCategories = async (req, res) => {
 exports.getCategoryById = async (req, res) => {
   if (!req.user) {
     return res.status(401).json({
-      error: "Debes iniciar sesión para agregar productos al carrito",
+      error: "Debes iniciar sesión para acceder a la url",
     });
   }
 
@@ -59,7 +59,7 @@ exports.getCategoryById = async (req, res) => {
 exports.updateCategory = async (req, res) => {
   if (!req.user) {
     return res.status(401).json({
-      error: "Debes iniciar sesión para agregar productos al carrito",
+      error: "Debes iniciar sesión para acceder a la url",
     });
   }
   if (req.user.rol !== 'Admin') {  
@@ -85,7 +85,7 @@ exports.updateCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   if (!req.user) {
     return res.status(401).json({
-      error: "Debes iniciar sesión para agregar productos al carrito",
+      error: "Debes iniciar sesión para acceder a la url",
     });
   }
   if (req.user.rol !== 'Admin') {  
