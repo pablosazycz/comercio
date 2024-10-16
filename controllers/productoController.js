@@ -29,30 +29,9 @@ exports.createProducto = async (req, res) => {
   }
 };
 
-exports.createProductoApi = async (req, res) => {
-  const nuevoProducto = new Producto({
-    nombre: req.body.nombre,
-    precio: req.body.precio,
-    descripcion: req.body.descripcion,
-    categoria: req.body.categoria,
-  });
 
-  try {
-    await nuevoProducto.save();
-    res.status(201).json(productoGuardado);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
 
-exports.getAllProductosApi = async (req, res) => {
-  try {
-    const productos = await Producto.find().populate("categoria");
-    res.status(200).json({ productos });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+
 
 exports.getAllProductos = async (req, res) => {
   try {
