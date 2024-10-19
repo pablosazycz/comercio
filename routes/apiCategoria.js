@@ -5,12 +5,12 @@ const {isAdmin} = require('../middlewares/auth');
 
 router.get("/categorias", apiCategoriaController.getAllCategories);
 
-router.post("/categorias", apiCategoriaController.createCategories);
+router.post("/categorias",isAdmin, apiCategoriaController.createCategories);
 
 router.get("/categorias/:id", apiCategoriaController.getCategoryById);
 
-router.put("/categorias/:id", apiCategoriaController.updateCategory);
+router.put("/categorias/:id",isAdmin, apiCategoriaController.updateCategory);
 
-router.delete("/categorias/:id", apiCategoriaController.deleteCategory);
+router.delete("/categorias/:id",isAdmin, apiCategoriaController.deleteCategory);
 
 module.exports = router;
