@@ -7,14 +7,14 @@ function ensureAuthenticated(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-  if (req.isAuthenticated() && req.user.rol === 'Admin') {
+  if (req.isAuthenticated() && req.user.rol === 'admin') {
     return next();
   }
   res.status(403).send('Acceso denegado');
 }
 
 function isCliente(req, res, next) {
-  if (req.isAuthenticated() && req.user.rol === 'Cliente') {
+  if (req.isAuthenticated() && req.user.rol === 'cliente') {
     return next();
   }
   res.status(403).send('Acceso denegado. Solo los clientes pueden realizar esta acción.');

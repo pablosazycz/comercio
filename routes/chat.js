@@ -1,19 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const chatbot = require('../config/chatbot');
+const {ensureAuthenticated} = require('../middlewares/auth');
+const {isCliente} = require('../middlewares/auth');
 
-router.get("/", (req, res) => {
+
+router.get("/", isCliente,(req, res) => {
   res.render("chat"); 
 });
 
-router.post("/", (req, res) => {
-  const userMsg = req.body.msg; // Mensaje enviado por el usuario
-  const session = req.session; // Sesión actual
-
-  try {
-    console.log("Mensaje recibido del cliente:", userMsg); // Log para confirmar el mensaje recibido
-    const response = chatbot.handleMessage(userMsg, session); // Respuesta del bot
-    console.log("Respuesta del bot:", response.reply); // Log para confirmar la respuesta
+router.post("/",isCliente, (req, res) => {
+  const userMsg = req.body.msg; 
+  const session = req.session; 
+  try {   
+    const response = chatbot.handleMessage(userMsg, session); // Respuesta del bots    
     res.json({ reply: response.reply, options: response.options || [] });
   } catch (error) {
     console.error("Error en el chatbot:", error.message);
