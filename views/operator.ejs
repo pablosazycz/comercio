@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Operador</title>
+  <link rel="stylesheet" href="/stylesheets/style.css"> <!-- Asegúrate de tener el CSS adecuado -->
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Panel de Operador</h1>
+
+    <!-- Fila principal para dividir la interfaz -->
+    <div class="row">
+      <!-- Lista de clientes en espera -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h2>Clientes en Espera</h2>
+          </div>
+          <ul id="clientList" class="list-group list-group-flush">
+            <!-- La lista de clientes se llenará aquí mediante JavaScript -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Conversación con el cliente -->
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2>Conversación con el Cliente</h2>
+          </div>
+          <div class="card-body" id="chatContainer">
+            <div id="chatMessages" class="border p-3 mb-3" style="height: 300px; overflow-y: scroll;">
+              <!-- Los mensajes aparecerán aquí -->
+            </div>
+
+            <!-- Mensaje de entrada -->
+            <div class="input-group">
+              <input type="text" id="messageInput" class="form-control" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje...">
+              <button class="btn btn-primary" onclick="sendMessage()">Enviar</button>
+            </div>
+            <button class="btn btn-danger mt-3" onclick="closeConversation()">Cerrar Conversación</button>
+
+            <!-- Escondido: ID del cliente seleccionado -->
+            <input type="hidden" id="selectedClientId">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vinculamos el JS de Bootstrap 5.3.3 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/operator.js"></script>
+</body>
+</html>

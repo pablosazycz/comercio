@@ -9,9 +9,10 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const expressLayouts = require("express-ejs-layouts");
 const passport = require("passport");
-const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const session = require("./config/session");
+
 const flash = require("connect-flash");
+const configureSocket = require("./config/socket");
 
 // webapp
 const authRouter = require("./routes/auth");
@@ -23,6 +24,8 @@ const usuarioRouter = require("./routes/usuario");
 const categoriaRouter = require("./routes/categoria");
 const carroRouter = require("./routes/carro");
 const pedidoRouter = require("./routes/pedido");
+const chatRouter = require("./routes/chat");
+const operatorRouter = require("./routes/operator");
 
 // API
 const apiAuthRputer = require("./routes/apiAuth");
@@ -30,26 +33,37 @@ const apiProductoRouter = require("./routes/apiProducto");
 const apiCategoriaRouter = require("./routes/apiCategoria");
 
 
+
+
 const app = express();
 // Conexión a la base de datos
 connectDB();
 require("./config/passport")(passport);
 
+//websocket
+const server = require("http").createServer(app);
+const io = require("./config/socket")(server);
+
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 // app.set("view engine", "pug");
+
+
+// app.use(session({
+//   secret:process.env.SESSION_SECRET || 'tu_secreto_lala',
+//   resave: false,
+//   saveUninitialized: true,
+//   store: MongoStore.create({
+//     mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/comercio',
+//     ttl: 14 * 24 * 60 * 60  // Tiempo de vida de 14 días
+//   }),
+//   cookie: { secure: false }  // Cambia a true si usas HTTPS
+// }));
+
 //middlewares
-app.use(session({
-  secret:process.env.SESSION_SECRET || 'tu_secreto_lala',
-  resave: false,
-  saveUninitialized: true,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/comercio',
-    ttl: 14 * 24 * 60 * 60  // Tiempo de vida de 14 días
-  }),
-  cookie: { secure: false }  // Cambia a true si usas HTTPS
-}));
+app.use(session());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -75,15 +89,18 @@ app.use("/usuarios", usuarioRouter);
 app.use("/categorias", categoriaRouter);
 app.use('/carro', carroRouter);
 app.use('/pedido', pedidoRouter);
+app.use("/chat", chatRouter);
+app.use("/operator", operatorRouter);
 
 // API
 app.use("/api", apiAuthRputer);
 app.use("/api", apiProductoRouter);
 app.use("/api", apiCategoriaRouter);
 
+
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 

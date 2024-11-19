@@ -1,0 +1,37 @@
+// Conectar al servidor WebSocket (usualmente el mismo servidor que sirve el HTML)
+const socket = io();
+
+// Verificar que la conexión se estableció correctamente
+socket.on("connect", () => {
+    console.log("Conectado al servidor de WebSocket");
+});
+
+// Escuchar los mensajes enviados por el servidor
+socket.on("mensaje", (msg) => {
+    console.log("Mensaje recibido:", msg);
+    mostrarMensaje(msg);  // Llamamos a la función que mostrará el mensaje
+});
+
+// Función para mostrar los mensajes recibidos
+function mostrarMensaje(msg) {
+    const mensajesDiv = document.getElementById("mensajes");
+    const nuevoMensaje = document.createElement("div");
+    nuevoMensaje.classList.add("p-2", "mb-2", "rounded", "bg-secondary", "text-danger");
+    nuevoMensaje.textContent = msg;
+    mensajesDiv.appendChild(nuevoMensaje);
+
+    // Desplazar el contenedor de mensajes hacia el último mensaje
+    mensajesDiv.scrollTop = mensajesDiv.scrollHeight;
+}
+
+// Función para enviar un mensaje
+function sendMessage(event) {
+    event.preventDefault();
+    const input = document.getElementById("mensajeInput");
+    const mensaje = input.value.trim();
+
+    if (mensaje) {
+        socket.emit("mensaje", mensaje); // Enviar el mensaje al servidor
+        input.value = ""; // Limpiar el campo de texto después de enviar el mensaje
+    }
+}

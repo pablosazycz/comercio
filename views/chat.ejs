@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <script defer src="/js/chat.js"></script>
+</head>
+
+<div class="container my-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Chat</h5>
+    </div>
+    <div class="card-body p-3" id="mensajes" style="height: 300px; overflow-y: auto;">
+      <!-- Mensajes dinámicos se insertarán aquí -->
+    </div>
+    <div class="card-footer">
+      <div id="botones" class="mb-3 d-flex flex-wrap gap-2">
+        <!-- Botones dinámicos se insertarán aquí -->
+      </div>
+      <form id="chat-form" onsubmit="sendMessage(event)" class="d-flex">
+        <input 
+          id="mensajeInput" 
+          type="text" 
+          class="form-control me-2" 
+          placeholder="Escribe un mensaje" 
+          required
+        />
+        <button type="submit" id="enviarButton" class="btn btn-primary">Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
