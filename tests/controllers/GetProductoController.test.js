@@ -2,10 +2,51 @@ const Producto = require('../../models/Producto');
 const Usuario = require('../../models/Usuario');
 const Categoria = require('../../models/Categoria');
 const request = require('supertest');
-const app = require('../../app');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
-describe('GET /productos', () => {
+jest.setTimeout(30000);
+
+const { MongoMemoryServer } = require('mongodb-memory-server');
+const session = require('express-session');
+const createSession = require('../../config/session'); //Sesion
+const app = require('../../app');  // Express
+
+let mongoServer;
+let mongoUri;
+
+beforeAll(async () => {
+    if (!mongoServer) {
+        mongoServer = await MongoMemoryServer.create();
+        mongoUri = mongoServer.getUri(); // Esto es lo que debes pasar a MongoStore
+    }
+
+    // Conectar a MongoDB en memoria
+    if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(mongoUri);
+    }
+
+    // Configura las sesiones para usar MongoDB en memoria
+    app.use(createSession(mongoUri)); // Usamos mongoUri de MongoMemoryServer 
+});
+
+afterEach(async () => {
+    // Limpia las colecciones después de cada prueba
+    const collections = mongoose.connection.collections;
+    for (const key in collections) {
+        await collections[key].deleteMany({});
+    }
+});
+
+afterAll(async () => {
+    // Cierra la conexión a la BD y detiene el servidor
+    await mongoose.connection.dropDatabase();
+    await mongoose.connection.close();
+    await mongoServer.stop();
+});
+
+
+describe('POST /api/login y GET /api/productos', () => {
     let adminAgent, clienteAgent;
     let adminUser, clienteUser;
     let producto;
@@ -76,6 +117,43 @@ describe('GET /productos', () => {
         await Usuario.deleteMany({});
         await Producto.deleteMany({});
     });
+
+    // ===================== POST /API/LOGIN =====================
+
+    it('debería ingresar al sistema el usuario que tiene rol de Admin', async () => {
+        // Simula login de admin
+        const res = await adminAgent
+            .post('/api/login')
+            .send({
+                email: 'admin@example.com',
+                password: 'admin123',
+            });
+        expect(res.status).toBe(200);
+    });
+
+    it('debería ingresar al sistema el usuario que tiene rol de Cliente', async () => {
+        // Simula el login de cliente
+        const res = await clienteAgent
+            .post('/api/login')
+            .send({
+                email: 'cliente@example.com',
+                password: 'cliente123',
+            });
+        expect(res.status).toBe(200);
+    });
+
+    it('ingresar al sistema con credenciales incorrectas', async () => {
+        // Simula intento de login con credenciales incorrectas
+        const res = await clienteAgent
+            .post('/api/login')
+            .send({
+                email: 'cliente@example.com',
+                password: 'c323hds',
+            });
+        expect(res.status).toBe(401);
+    });
+
+    // ===================== GET /API/PRODUCTOS =====================
 
     it('debería devolver todos los productos si el usuario tiene rol de admin', async () => {
         const res = await adminAgent.get('/api/productos');
