@@ -21,7 +21,7 @@ exports.createCategories = async (req, res) => {
       error: "Debes iniciar sesión para acceder a la url",
     });
   }
-  if (req.user.rol !== 'Admin') {  
+  if (req.user.rol !== 'admin') {
     return res.status(403).json({
       error: "No tienes permisos para ver las categorías",
     });
@@ -62,7 +62,7 @@ exports.updateCategory = async (req, res) => {
       error: "Debes iniciar sesión para acceder a la url",
     });
   }
-  if (req.user.rol !== 'Admin') {  
+  if (req.user.rol !== 'admin') {
     return res.status(403).json({
       error: "No tienes permisos para ver las categorías",
     });
@@ -88,7 +88,7 @@ exports.deleteCategory = async (req, res) => {
       error: "Debes iniciar sesión para acceder a la url",
     });
   }
-  if (req.user.rol !== 'Admin') {  
+  if (req.user.rol !== 'admin') {
     return res.status(403).json({
       error: "No tienes permisos para ver las categorías",
     });
