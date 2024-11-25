@@ -4,7 +4,8 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -27,5 +28,10 @@
     "pug": "^3.0.3",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.2",
+    "supertest": "^7.0.0"
   }
 }

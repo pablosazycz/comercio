@@ -1,11 +1,12 @@
 const Producto = require("../models/Producto");
 
-exports.getAllProducts = async (req, res) => { if (!req.user) {
+exports.getAllProducts = async (req, res) => {
+  if (!req.user) {
     return res.status(401).json({
       error: "Debes iniciar sesión para acceder a la url",
     });
   }
- 
+
   try {
     const productos = await Producto.find();
     res.status(200).json(productos);
@@ -15,11 +16,11 @@ exports.getAllProducts = async (req, res) => { if (!req.user) {
 };
 
 exports.getProductById = async (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({
-          error: "Debes iniciar sesión para acceder a la url",
-        });
-      }
+  if (!req.user) {
+    return res.status(401).json({
+      error: "Debes iniciar sesión para acceder a la url",
+    });
+  }
   try {
     const producto = await Producto.findById(req.params.id);
     if (!producto) {
@@ -32,16 +33,16 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({
-          error: "Debes iniciar sesión para acceder a la url",
-        });
-      }
-      if (req.user.rol !== 'Admin') {  
-        return res.status(403).json({
-          error: "No tienes permisos para ver las categorías",
-        });
-      }
+  if (!req.user) {
+    return res.status(401).json({
+      error: "Debes iniciar sesión para acceder a la url",
+    });
+  }
+  if (req.user.rol !== 'admin') {
+    return res.status(403).json({
+      error: "No tienes permisos para ver las categorías",
+    });
+  }
   try {
     const producto = new Producto(req.body);
     await producto.save();
@@ -52,16 +53,16 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({
-          error: "Debes iniciar sesión para acceder a la url",
-        });
-      }
-      if (req.user.rol !== 'Admin') {  
-        return res.status(403).json({
-          error: "No tienes permisos para ver las categorías",
-        });
-      }
+  if (!req.user) {
+    return res.status(401).json({
+      error: "Debes iniciar sesión para acceder a la url",
+    });
+  }
+  if (req.user.rol !== 'admin') {
+    return res.status(403).json({
+      error: "No tienes permisos para ver las categorías",
+    });
+  }
   try {
     const producto = await Producto.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -77,16 +78,16 @@ exports.updateProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({
-          error: "Debes iniciar sesión para acceder a la url",
-        });
-      }
-      if (req.user.rol !== 'Admin') {  
-        return res.status(403).json({
-          error: "No tienes permisos para ver las categorías",
-        });
-      }
+  if (!req.user) {
+    return res.status(401).json({
+      error: "Debes iniciar sesión para acceder a la url",
+    });
+  }
+  if (req.user.rol !== 'admin') {
+    return res.status(403).json({
+      error: "No tienes permisos para ver las categorías",
+    });
+  }
   try {
     const producto = await Producto.findByIdAndDelete(req.params.id);
     if (!producto) {
